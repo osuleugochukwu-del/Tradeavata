@@ -1,7 +1,6 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from 'astro';
 
 export default defineConfig({
-  output: 'static',
-  site: 'https://YOUR-USERNAME.github.io',
-  base: '/trade-avata'
+  site: 'https://osuleugochukwu-del.github.io',
+  base: '/Tradeavata/',
 });
