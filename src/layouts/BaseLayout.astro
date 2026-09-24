@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+const { title = 'Trade Avata — Trade Simple.', description = 'Trade Avata builds practical products, technology, tools, applications, resources and education to make trading simpler.' } = Astro.props;
+const path = Astro.url.pathname;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1473e6" />
+    <link rel="icon" type="image/png" sizes="1024x1024" href={`${import.meta.env.BASE_URL}brand/trade-avata-mark.png`} />
+    <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}brand/trade-avata-mark.png`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href={`${import.meta.env.BASE_URL}`} aria-label="Trade Avata home"><img src={`${import.meta.env.BASE_URL}brand/trade-avata-mark.png`} alt="Trade Avata logo" /><span class="brand-name">TRADE <b>AVATA</b><small>TRADE SIMPLE.</small></span></a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a class:list={{active:path.startsWith('/learn')}} href={`${import.meta.env.BASE_URL}learn`}>Learn</a>
+          <a class:list={{active:path.startsWith('/trade')}} href={`${import.meta.env.BASE_URL}trade`}>Trade</a>
+          <a class:list={{active:path.startsWith('/tools')}} href={`${import.meta.env.BASE_URL}tools`}>Tools</a>
+          <a class:list={{active:path.startsWith('/store')}} href={`${import.meta.env.BASE_URL}store`}>Products</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="text-link desktop-only" href={`${import.meta.env.BASE_URL}login`}>Log in</a>
+          <a class="button button-small" href={`${import.meta.env.BASE_URL}register`}>Get started</a>
+          <button class="menu-button" aria-label="Open menu" aria-expanded="false">☰</button>
+        </div>
+      </div>
+      <div class="mobile-menu" hidden>
+        <a href={`${import.meta.env.BASE_URL}learn`}>Learn</a><a href={`${import.meta.env.BASE_URL}trade`}>Trade</a><a href={`${import.meta.env.BASE_URL}tools`}>Tools</a><a href={`${import.meta.env.BASE_URL}store`}>Products</a><a href={`${import.meta.env.BASE_URL}about`}>About</a><a href={`${import.meta.env.BASE_URL}login`}>Log in</a>
+      </div>
+    </header>
+    <main>{Astro.children}</main>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div><div class="brand footer-brand"><img src={`${import.meta.env.BASE_URL}brand/trade-avata-mark.png`} alt="Trade Avata logo" /><span class="brand-name">TRADE <b>AVATA</b><small>TRADE SIMPLE.</small></span></div><p>Making trading simpler through products, technology, tools and education.</p></div>
+        <div><strong>Explore</strong><a href={`${import.meta.env.BASE_URL}learn`}>Learn</a><a href={`${import.meta.env.BASE_URL}trade`}>Trade</a><a href={`${import.meta.env.BASE_URL}tools`}>Tools</a><a href={`${import.meta.env.BASE_URL}store`}>Products</a></div>
+        <div><strong>Company</strong><a href={`${import.meta.env.BASE_URL}about`}>About</a><a href={`${import.meta.env.BASE_URL}contact`}>Contact</a><a href={`${import.meta.env.BASE_URL}faq`}>FAQ</a></div>
+        <div><strong>Legal</strong><a href={`${import.meta.env.BASE_URL}privacy`}>Privacy</a><a href={`${import.meta.env.BASE_URL}terms`}>Terms</a><a href={`${import.meta.env.BASE_URL}risk-disclosure`}>Risk disclosure</a></div>
+      </div>
+      <div class="container footer-bottom"><span>© {new Date().getFullYear()} Trade Avata</span><span>Trading involves risk. No strategy guarantees profit.</span></div>
+    </footer>
+    <script>
+      const button = document.querySelector('.menu-button');
+      const menu = document.querySelector('.mobile-menu');
+      button?.addEventListener('click', () => { const open = button.getAttribute('aria-expanded') === 'true'; button.setAttribute('aria-expanded', String(!open)); menu.hidden = open; });
+    </script>
+  </body>
+</html>

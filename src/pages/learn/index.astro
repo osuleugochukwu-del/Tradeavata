@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { courses } from '../../data/site.js';
+---
+<BaseLayout title="Learn — Trade Avata"><section class="page-hero"><div class="container"><span class="eyebrow">Learn</span><h1>Learn with a path.</h1><p>Public previews stay simple. Protected lessons, progress and entitlements are designed to connect to Firebase when the project is configured.</p></div></section><section class="section"><div class="container"><div class="cards">{courses.map(c => <article class="card course-card"><div class="course-cover"><span>{c.level}</span></div><span class="pill">{c.access}</span><h3>{c.title}</h3><p>{c.description}</p><div class="meta"><span>{c.modules} modules</span><span>{c.lessons} lessons</span><span>{c.duration}</span><span>{c.progression}</span></div><a class="button button-small" href={`${import.meta.env.BASE_URL}learn/${c.slug}`}>Explore course</a></article>)}</div></div></section></BaseLayout>

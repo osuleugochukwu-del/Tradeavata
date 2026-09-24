@@ -1,0 +1,34 @@
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Tools — Trade Avata" description="Simple trading calculators for risk, position sizing and planning.">
+  <section class="page-hero"><div class="container"><span class="eyebrow">Tools</span><h1>Plan before you trade.</h1><p>Focused calculators that run in your browser. Your inputs stay on the page.</p></div></section>
+  <section class="section" id="calculators"><div class="container calculator-grid">
+    <article class="calculator card"><span class="pill">Risk</span><h2>Position size</h2><p>Calculate a simple position-size estimate from account risk and stop distance.</p>
+      <label>Account balance <input id="balance" type="number" min="0" step="0.01" value="1000"></label>
+      <label>Risk % <input id="risk" type="number" min="0" step="0.1" value="1"></label>
+      <label>Stop distance (pips) <input id="stop" type="number" min="0.01" step="0.01" value="20"></label>
+      <label>Value per pip per 1 lot <input id="pipValue" type="number" min="0.01" step="0.01" value="10"></label>
+      <div class="result" id="positionResult">Estimated size: —</div>
+    </article>
+    <article class="calculator card"><span class="pill">R:R</span><h2>Risk / reward</h2><p>Compare planned reward with planned risk.</p>
+      <label>Entry price <input id="entry" type="number" step="0.00001" value="100"></label>
+      <label>Stop price <input id="rrStop" type="number" step="0.00001" value="98"></label>
+      <label>Target price <input id="target" type="number" step="0.00001" value="104"></label>
+      <div class="result" id="rrResult">Risk/reward: —</div>
+    </article>
+    <article class="calculator card"><span class="pill">Pips</span><h2>Simple pip value</h2><p>Estimate pip value from lot size and a supplied pip value per lot.</p>
+      <label>Lots <input id="lots" type="number" min="0" step="0.01" value="0.10"></label>
+      <label>Pip value per 1 lot <input id="pv" type="number" min="0" step="0.01" value="10"></label>
+      <div class="result" id="pipResult">Value per pip: —</div>
+    </article>
+  </div></section>
+  <section class="section section-soft"><div class="container"><div class="notice"><strong>Important:</strong> These calculators are planning aids, not guarantees. Broker contract specifications, account currency, instrument type, commissions, spreads and execution can change the actual result.</div></div></section>
+  <script>
+    const n = (id) => Number(document.getElementById(id)?.value || 0);
+    const money = (v) => Number.isFinite(v) ? v.toFixed(2) : '—';
+    function updatePosition(){ const riskMoney=n('balance')*n('risk')/100; const size=n('stop')&&n('pipValue') ? riskMoney/(n('stop')*n('pipValue')) : 0; document.getElementById('positionResult').textContent=`Risk amount: ${money(riskMoney)} · Estimated lots: ${size ? size.toFixed(3) : '—'}`; }
+    function updateRR(){ const risk=Math.abs(n('entry')-n('rrStop')); const reward=Math.abs(n('target')-n('entry')); const rr=risk ? reward/risk : 0; document.getElementById('rrResult').textContent=`Risk/reward: ${rr ? rr.toFixed(2)+'R' : '—'} · Risk distance: ${risk || '—'} · Reward distance: ${reward || '—'}`; }
+    function updatePip(){ const v=n('lots')*n('pv'); document.getElementById('pipResult').textContent=`Value per pip: ${v ? money(v) : '—'}`; }
+    document.querySelectorAll('.calculator input').forEach(i=>i.addEventListener('input',()=>{updatePosition();updateRR();updatePip();})); updatePosition();updateRR();updatePip();
+  </script>
+</BaseLayout>

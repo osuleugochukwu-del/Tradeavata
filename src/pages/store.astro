@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { products, site } from '../data/site.js';
+const base = import.meta.env.BASE_URL;
+const platforms = ['All','MT4','MT5','cTrader','TradingView','Web','Windows','macOS','Android','iOS'];
+const types = ['All','Indicator','Application','Tool','Course','Digital resource','Subscription'];
+const categories = ['All','Indicators','Trading Applications','Trading Tools','Courses','Templates & Resources'];
+const availability = ['All','Available','Coming Soon','Planned'];
+---
+<BaseLayout title="Products & Store — Trade Avata" description="Explore Trade Avata products, applications, indicators, tools, courses and digital resources.">
+<section class="page-hero"><div class="container"><span class="eyebrow">Trade Avata Marketplace</span><h1>Products built to help you trade simple.</h1><p>{site.philosophy} Explore everything from indicators and applications to tools, courses and future products in one searchable marketplace.</p></div></section>
+<section class="section store-section"><div class="container">
+  <div class="store-toolbar">
+    <div class="search-wrap"><span>⌕</span><input id="product-search" type="search" placeholder="Search products…" aria-label="Search products" /></div>
+    <select id="sort-products" aria-label="Sort products"><option value="newest">Newest</option><option value="name">Name A–Z</option><option value="price-low">Price low → high</option><option value="price-high">Price high → low</option></select>
+  </div>
+  <div class="filter-panel">
+    <div><label for="platform-filter">Platform</label><select id="platform-filter">{platforms.map(x => <option>{x}</option>)}</select></div>
+    <div><label for="type-filter">Product type</label><select id="type-filter">{types.map(x => <option>{x}</option>)}</select></div>
+    <div><label for="category-filter">Category</label><select id="category-filter">{categories.map(x => <option>{x}</option>)}</select></div>
+    <div><label for="availability-filter">Availability</label><select id="availability-filter">{availability.map(x => <option>{x}</option>)}</select></div>
+    <div><label for="price-filter">Price</label><select id="price-filter"><option>All</option><option>Free</option><option>Paid</option></select></div>
+  </div>
+  <div class="store-meta"><strong id="result-count">{products.length} products</strong><span>Everything searchable and filterable from one place.</span></div>
+  <div id="product-grid" class="product-grid">
+    {products.map((p, i) => <article class="product-card" data-name={p.name} data-platforms={p.platforms.join('|')} data-type={p.type} data-category={p.category} data-availability={p.availability} data-price={p.price} data-index={i}>
+      <a class="product-art" href={`${base}store/${p.slug}`}><span>{p.type}</span><strong>{p.platforms.join(' · ')}</strong></a>
+      <div class="product-body"><div class="product-tags">{p.platforms.slice(0,3).map(x => <span class="pill">{x}</span>)}</div><h3><a href={`${base}store/${p.slug}`}>{p.name}</a></h3><p>{p.short}</p><div class="product-bottom"><strong>{p.priceLabel}</strong><a class="text-link" href={`${base}store/${p.slug}`}>View product →</a></div></div>
+    </article>)}
+  </div>
+  <div id="empty-state" class="empty-state" hidden><h3>No products match those filters.</h3><p>Try a different platform, product type or search term.</p></div>
+</div></section>
+<section class="section section-soft"><div class="container narrow-copy"><span class="eyebrow">The Trade Avata approach</span><h2>The right tool can make a complicated process simple.</h2><p>We are building Trade Avata as a flexible company platform — not around one product, one market or one type of customer. New applications, technologies, resources and solutions can grow into the ecosystem over time.</p></div></section>
+<script define:vars={{products}}>
+  const search = document.querySelector('#product-search'); const platform = document.querySelector('#platform-filter'); const type = document.querySelector('#type-filter'); const category = document.querySelector('#category-filter'); const avail = document.querySelector('#availability-filter'); const price = document.querySelector('#price-filter'); const sort = document.querySelector('#sort-products'); const grid = document.querySelector('#product-grid'); const count = document.querySelector('#result-count'); const empty = document.querySelector('#empty-state');
+  const cards = [...document.querySelectorAll('.product-card')];
+  function render(){ const q=(search.value||'').toLowerCase().trim(); let visible=cards.filter(c=>{ const p=c.dataset; const matchQ=!q || `${p.name} ${p.platforms} ${p.type} ${p.category}`.toLowerCase().includes(q); const matchPlatform=platform.value==='All'||p.platforms.split('|').includes(platform.value); const matchType=type.value==='All'||p.type===type.value; const matchCategory=category.value==='All'||p.category===category.value; const matchAvail=avail.value==='All'||p.availability===avail.value; const matchPrice=price.value==='All'||(price.value==='Free'&&Number(p.price)===0)||(price.value==='Paid'&&Number(p.price)>0); return matchQ&&matchPlatform&&matchType&&matchCategory&&matchAvail&&matchPrice; }); visible.sort((a,b)=>sort.value==='name'?a.dataset.name.localeCompare(b.dataset.name):sort.value==='price-low'?Number(a.dataset.price)-Number(b.dataset.price):sort.value==='price-high'?Number(b.dataset.price)-Number(a.dataset.price):Number(a.dataset.index)-Number(b.dataset.index)); cards.forEach(c=>c.hidden=true); visible.forEach(c=>{c.hidden=false;grid.appendChild(c)}); count.textContent=`${visible.length} product${visible.length===1?'':'s'}`; empty.hidden=visible.length>0; }
+  [search,platform,type,category,avail,price,sort].forEach(el=>el.addEventListener('input',render)); render();
+</script>
+</BaseLayout>
