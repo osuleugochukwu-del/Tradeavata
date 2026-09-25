@@ -1165,3 +1165,109 @@ input:focus{
     font-size:7px
   }
 }
+/* =========================================================
+   TRADE AVATA — READABILITY PASS
+   ========================================================= */
+
+body {
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+p,
+li {
+  line-height: 1.7;
+}
+
+.hero p,
+.page-hero p {
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+.card p {
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.card h3 {
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.meta {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.eyebrow,
+.pill {
+  font-size: 14px;
+}
+
+.button {
+  font-size: 16px;
+}
+
+.desktop-nav a,
+.text-link {
+  font-size: 16px;
+}
+
+.footer-grid p,
+.footer-grid a {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.mobile-menu a {
+  font-size: 17px;
+}
+
+/* Course/module readability */
+.course-card {
+  padding: 26px;
+}
+
+.course-card h3 {
+  font-size: 23px;
+}
+
+.course-card .meta {
+  font-size: 15px;
+}
+
+/* Better reading width */
+.page-hero p,
+.hero p {
+  max-width: 760px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+  }
+
+  .hero p,
+  .page-hero p {
+    font-size: 18px;
+  }
+
+  .card p {
+    font-size: 17px;
+  }
+
+  .card h3,
+  .course-card h3 {
+    font-size: 21px;
+  }
+
+  .meta {
+    font-size: 15px;
+  }
+
+  .button {
+    font-size: 16px;
+  }
+}
