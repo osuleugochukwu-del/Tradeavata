@@ -36,7 +36,7 @@ const path = Astro.url.pathname;
         <a href={`${import.meta.env.BASE_URL}learn`}>Learn</a><a href={`${import.meta.env.BASE_URL}trade`}>Trade</a><a href={`${import.meta.env.BASE_URL}tools`}>Tools</a><a href={`${import.meta.env.BASE_URL}store`}>Products</a><a href={`${import.meta.env.BASE_URL}about`}>About</a><a href={`${import.meta.env.BASE_URL}login`}>Log in</a>
       </div>
     </header>
-    <main>{Astro.children}</main>
+    <main><slot /></main>
     <footer class="site-footer">
       <div class="container footer-grid">
         <div><div class="brand footer-brand"><img src={`${import.meta.env.BASE_URL}brand/trade-avata-mark.png`} alt="Trade Avata logo" /><span class="brand-name">TRADE <b>AVATA</b><small>TRADE SIMPLE.</small></span></div><p>Making trading simpler through products, technology, tools and education.</p></div>
